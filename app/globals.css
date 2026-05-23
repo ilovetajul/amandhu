@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --color-bg: #030b18;
+  --color-surface: #07111f;
+  --color-card: #0a1828;
+  --color-border: #142035;
+  --color-muted: #4a6080;
+  --color-text: #cbd5e1;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-mono); -webkit-font-smoothing: antialiased; }
+
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 2px; }
+
+/* Grid scan line effect for command center feel */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Glowing card border */
+.glow-card { position: relative; }
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34,211,238,0.12) 0%, transparent 50%, rgba(99,102,241,0.08) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Status pulse */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+.pulse { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* Critical blink */
+@keyframes critical-blink {
+  0%, 100% { border-color: rgba(239,68,68,0.4); }
+  50% { border-color: rgba(239,68,68,0.9); }
+}
+.critical-border { animation: critical-blink 1.5s ease-in-out infinite; }
+
+/* Slide in */
+@keyframes slide-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.slide-up { animation: slide-up 0.4s ease forwards; }
+
+/* Data row */
+.data-row { transition: background 0.12s ease; }
+.data-row:hover { background: rgba(34,211,238,0.03); }
+
+/* Number ticker */
+@keyframes count-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.count-in { animation: count-in 0.5s ease forwards; }
